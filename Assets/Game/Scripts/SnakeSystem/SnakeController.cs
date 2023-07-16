@@ -85,5 +85,7 @@ public class SnakeController : NetworkBehaviour, IPicker
     public void GoUp()
     {
         direction = Vector3.forward;
+
+        //Debug.LogError("Keys pressed");
     }
 }

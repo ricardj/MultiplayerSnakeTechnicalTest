@@ -10,8 +10,6 @@ public class SnakeNetworkManager : NetworkManager
     [SerializeField] NetworkPlayersManager networkPlayersManager;
 
 
-    [Header("Events")]
-    public UnityEvent OnSnakePlayerCreated;
 
 
     public override void Awake()
@@ -40,7 +38,7 @@ public class SnakeNetworkManager : NetworkManager
     public override void OnClientConnect()
     {
         base.OnClientConnect();
-        OnSnakePlayerCreated.Invoke();
+
 
     }
 

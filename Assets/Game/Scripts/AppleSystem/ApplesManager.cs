@@ -24,7 +24,6 @@ public class ApplesManager : NetworkedSingleton<ApplesManager>
     [Server]
     public void Start()
     {
-        SnakeNetworkManager.singleton.spawnPrefabs.Add(applePickableController.gameObject);
         
         StartCoroutine(SpawnSequence());
     }

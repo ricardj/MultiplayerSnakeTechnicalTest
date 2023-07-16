@@ -35,7 +35,10 @@ public class InputManager : MonoBehaviour
         for (int i = 0; i < targetKeys.Length; i++)
         {
             if (Input.GetKeyDown(targetKeys[i]))
+            {
+                Debug.LogError("Keys pressed");
                 targetCallback.Invoke();
+            }
         }
     }
 }
