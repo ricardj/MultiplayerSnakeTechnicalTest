@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SnakeController : MonoBehaviour
+public class SnakeController : NetworkBehaviour, IPicker
 {
     [SerializeField] List<SnakeSegmentController> _snakeSegments;
     [SerializeField] SnakeSegmentController _snakeSegmentPrefab;
@@ -25,7 +26,14 @@ public class SnakeController : MonoBehaviour
             return;
         _updateCounter = 0;
 
+        this.transform.position = new Vector3(
+           MathF.Round(this.transform.position.x) + direction.x,
+           0,
+           Mathf.Round(this.transform.position.z) + direction.z
+           );
 
+
+        
         _snakeSegments[0].Position = transform.position;
         for (int i = _snakeSegments.Count -1; i > 0; i--)
         {
@@ -34,11 +42,7 @@ public class SnakeController : MonoBehaviour
             currentSnakeSegment.Position = previousSnakeSegment.Position;
         }
 
-        this.transform.position = new Vector3(
-            MathF.Round(this.transform.position.x) + direction.x,
-            0,
-            Mathf.Round(this.transform.position.z) + direction.z
-            );
+       
     }
 
 

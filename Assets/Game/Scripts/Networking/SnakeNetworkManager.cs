@@ -1,0 +1,52 @@
+using Mirror;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+
+public class SnakeNetworkManager : NetworkManager
+{
+    public static new SnakeNetworkManager singleton { get; private set; }
+    [SerializeField] NetworkPlayersManager networkPlayersManager;
+
+
+    [Header("Events")]
+    public UnityEvent OnSnakePlayerCreated;
+
+
+    public override void Awake()
+    {
+        base.Awake();
+        singleton = this;
+    }
+
+
+    public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+    {
+
+        GameObject player = Instantiate(playerPrefab);
+        NetworkServer.AddPlayerForConnection(conn, player);
+        networkPlayersManager.AddNetworkPlayerToList(player);
+    }
+
+    
+
+    public override void OnServerDisconnect(NetworkConnectionToClient conn)
+    {
+        base.OnServerDisconnect(conn);
+
+    }
+
+    public override void OnClientConnect()
+    {
+        base.OnClientConnect();
+        OnSnakePlayerCreated.Invoke();
+
+    }
+
+    public SnakeController GetClientSnakeController()
+    {
+
+        return networkPlayersManager.GetPlayerSnakeController();
+    }
+}

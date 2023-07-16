@@ -1,22 +1,27 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class IPickable : MonoBehaviour
+public abstract class IPickable : NetworkBehaviour
 {
 
-    public PickContextEvent OnPickablePicked;
+    public PickContextEvent OnPickablePickedEvent;
 
     public void OnTriggerEnter(Collider other)
     {
-        IPicker picker = other.GetComponent<IPicker>(); 
+
+        IPicker picker = other.attachedRigidbody.GetComponent<IPicker>(); 
         if(picker != null)
         {
-            OnPickablePicked.Invoke(new PickContext()
+            OnPickablePickedEvent.Invoke(new PickContext()
             {
                 picker = picker,
                 pickable = this
             });
+            //OnPickablePicked();
         }
     }
+
+    //public abstract void OnPickablePicked();
 }
