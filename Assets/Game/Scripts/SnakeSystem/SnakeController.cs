@@ -53,7 +53,16 @@ public class SnakeController : NetworkBehaviour, IPicker
     public void Grow()
     {
         SnakeSegmentController newController = Instantiate(_snakeSegmentPrefab);
-        newController.Position = _snakeSegments.Last().Position;
+        NetworkServer.Spawn(newController.gameObject);
+        if (_snakeSegments.Count > 0)
+        {
+            newController.Position = _snakeSegments.Last().Position;
+
+        }
+        else
+        {
+            newController.Position = transform.position;
+        }
         _snakeSegments.Add(newController);
     }
 

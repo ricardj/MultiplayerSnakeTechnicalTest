@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 87eff28a7e5bb2640b23138720f6a70f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -156,8 +156,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  _snakeSegments:
-  - {fileID: 0}
   _snakeSegmentPrefab: {fileID: 4180559980195314541, guid: 59ce49252befb4d41af9dc01c8e72c9b, type: 3}
   _updatePeriod: 0.1
   direction: {x: 0, y: 0, z: 0}

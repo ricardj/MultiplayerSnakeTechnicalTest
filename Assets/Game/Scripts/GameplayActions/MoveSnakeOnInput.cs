@@ -2,7 +2,7 @@ using Mirror;
 using System.Collections;
 using UnityEngine;
 
-public class MoveSnakeOnInput : MonoBehaviour
+public class MoveSnakeOnInput : NetworkBehaviour
 {
 
     [Header("References")]

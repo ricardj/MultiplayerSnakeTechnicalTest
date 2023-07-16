@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-public class GrowSnakeOnAppleCollected : MonoBehaviour
+public class GrowSnakeOnAppleCollected : NetworkBehaviour
 {
     [SerializeField] ApplesManager _appleManager;
 
