@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SnakeController : NetworkBehaviour, IPicker
 {
-    [SerializeField] List<SnakeSegmentController> _snakeSegments;
+    [SerializeField] SyncList<SnakeSegmentController> _snakeSegments = new SyncList<SnakeSegmentController>();
     [SerializeField] SnakeSegmentController _snakeSegmentPrefab;
 
     [Header("Configuration")]
@@ -33,13 +33,16 @@ public class SnakeController : NetworkBehaviour, IPicker
            );
 
 
-        
+        if (_snakeSegments.Count > 0)
+        {
+
         _snakeSegments[0].Position = transform.position;
         for (int i = _snakeSegments.Count -1; i > 0; i--)
         {
             SnakeSegmentController currentSnakeSegment = _snakeSegments[i];
             SnakeSegmentController previousSnakeSegment = _snakeSegments[i - 1];
             currentSnakeSegment.Position = previousSnakeSegment.Position;
+        }
         }
 
        

@@ -13,7 +13,7 @@ public class MoveSnakeOnInput : MonoBehaviour
     [Header("Debug values")]
     [SerializeField] SnakeController _snakeController;
 
-
+    [Client]
     public void Start()
     {
         _networkManager.OnSnakePlayerCreated.AddListener(() =>

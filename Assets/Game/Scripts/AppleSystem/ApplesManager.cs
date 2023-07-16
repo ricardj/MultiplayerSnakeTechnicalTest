@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class ApplesManager : Singleton<ApplesManager>
+public class ApplesManager : NetworkedSingleton<ApplesManager>
 {
     [Header("Configuration")]
     [SerializeField] int _maxExclusive = 10;
@@ -19,8 +20,12 @@ public class ApplesManager : Singleton<ApplesManager>
     [Header("Debug")]
     [SerializeField] List<ApplePickableController> Pickables;
 
+
+    [Server]
     public void Start()
     {
+        SnakeNetworkManager.singleton.spawnPrefabs.Add(applePickableController.gameObject);
+        
         StartCoroutine(SpawnSequence());
     }
 
@@ -30,6 +35,7 @@ public class ApplesManager : Singleton<ApplesManager>
         while (true)
         {
             ApplePickableController newApple = Instantiate(applePickableController);
+            NetworkServer.Spawn(newApple.gameObject);
             newApple.transform.position = GetRandomPosition();
             Pickables.Add(newApple);
             newApple.OnPickablePickedEvent.AddListener(OnApplePicked.Invoke);

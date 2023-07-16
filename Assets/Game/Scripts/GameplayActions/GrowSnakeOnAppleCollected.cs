@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 public class GrowSnakeOnAppleCollected : MonoBehaviour
 {
     [SerializeField] ApplesManager _appleManager;
 
+    [Server]
     public void Start()
     {
         _appleManager.OnApplePicked.AddListener(context =>
