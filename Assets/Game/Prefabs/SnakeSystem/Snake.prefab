@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719170059898301253}
+  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8760463686512664650}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7269167581040399676
 MeshFilter:
@@ -132,6 +132,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4060623858207710244}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -139,7 +140,6 @@ Transform:
   m_Children:
   - {fileID: 3757553022138415948}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6908539454251076349
 MonoBehaviour:
@@ -157,6 +157,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   _snakeSegmentPrefab: {fileID: 4180559980195314541, guid: 59ce49252befb4d41af9dc01c8e72c9b, type: 3}
+  _snakeCollider: {fileID: 8078007717764004146}
   _updatePeriod: 0.1
   direction: {x: 0, y: 0, z: 0}
   _updateCounter: 0
