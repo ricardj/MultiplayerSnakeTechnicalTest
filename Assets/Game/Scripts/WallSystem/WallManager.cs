@@ -25,8 +25,9 @@ public class WallManager : MonoBehaviour
         IWallInteractable wallInteractable = wallInteractionContext.wallInteractable;
         WallController wallController = wallInteractionContext.wallController;
         WallController oppositieWallController = wallController.OppositeWall;
+        Vector3 collisionOffsest = wallInteractionContext.wallCollissionOffset;
 
-        wallInteractable.Transform.position = oppositieWallController.transform.position;
+        wallInteractable.Transform.position = oppositieWallController.transform.position + collisionOffsest;
 
         wallInteractable.Collider.enabled = false;
         yield return new WaitForSeconds(0.3f);

@@ -14,7 +14,7 @@ public class WallController : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.LogError("So far sogood");
+
         IWallInteractable wallInteractable = other.attachedRigidbody.gameObject.GetComponent<IWallInteractable>();
         if (wallInteractable != null)
         {
@@ -23,6 +23,7 @@ public class WallController : MonoBehaviour
             {
                 wallController = this,
                 wallInteractable = wallInteractable,
+                wallCollissionOffset = wallInteractable.Transform.position - this.transform.position
             });
         }
     }
