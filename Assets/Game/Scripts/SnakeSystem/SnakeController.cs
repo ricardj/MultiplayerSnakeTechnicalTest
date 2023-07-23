@@ -6,9 +6,10 @@ using UnityEngine;
 
 public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
 {
-    [SerializeField] SyncList<SnakeSegmentController> _snakeSegments = new SyncList<SnakeSegmentController>();
+    [SerializeField] List<SnakeSegmentController> _snakeSegments = new List<SnakeSegmentController>();
     [SerializeField] SnakeSegmentController _snakeSegmentPrefab;
     [SerializeField] Collider _snakeCollider;
+
     [Header("Configuration")]
     [SerializeField] float _updatePeriod;
 
@@ -19,6 +20,11 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
     public Transform Transform => transform;
     public Collider Collider => _snakeCollider;
 
+    [Header("Unity Events")]
+    public SnakeControllerEvent OnSnakeCollisionedWithSegment;
+
+
+
     public void Update()
     {
         _updateCounter += Time.deltaTime;
@@ -26,66 +32,106 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
             return;
         _updateCounter = 0;
 
-        this.transform.position = new Vector3(
-           MathF.Round(this.transform.position.x) + direction.x,
-           0,
-           Mathf.Round(this.transform.position.z) + direction.z
-           );
+
 
 
         if (_snakeSegments.Count > 0)
         {
 
-            _snakeSegments[0].Position = transform.position;
             for (int i = _snakeSegments.Count - 1; i > 0; i--)
             {
                 SnakeSegmentController currentSnakeSegment = _snakeSegments[i];
                 SnakeSegmentController previousSnakeSegment = _snakeSegments[i - 1];
                 currentSnakeSegment.Position = previousSnakeSegment.Position;
             }
+            _snakeSegments[0].Position = transform.position;
         }
 
-
+        this.transform.position = new Vector3(
+            MathF.Round(this.transform.position.x) + direction.x,
+            0,
+            Mathf.Round(this.transform.position.z) + direction.z
+            );
     }
 
 
 
     public void Grow()
     {
-        SnakeSegmentController newController = Instantiate(_snakeSegmentPrefab);
+        Vector3 targetPosition = _snakeSegments.Count > 0 ? _snakeSegments.Last().Position : transform.position;
+        SnakeSegmentController newController = Instantiate(_snakeSegmentPrefab, targetPosition, Quaternion.identity);
         NetworkServer.Spawn(newController.gameObject);
-        if (_snakeSegments.Count > 0)
-        {
-            newController.Position = _snakeSegments.Last().Position;
+        //if (_snakeSegments.Count > 0)
+        //{
+        //    newController.Position = _snakeSegments.Last().Position;
 
-        }
-        else
-        {
-            newController.Position = transform.position;
-        }
+        //}
+        //else
+        //{
+        //    newController.Position = transform.position;
+        //}
         _snakeSegments.Add(newController);
     }
 
 
     public void GoDown()
     {
-        direction = Vector3.back;
+        if (direction != Vector3.forward)
+            direction = Vector3.back;
     }
 
     public void GoLeft()
     {
-        direction = Vector3.left;
+        if (direction != Vector3.right)
+            direction = Vector3.left;
     }
 
     public void GoRight()
     {
-        direction = Vector3.right;
+        if (direction != Vector3.left)
+            direction = Vector3.right;
     }
 
     public void GoUp()
     {
-        direction = Vector3.forward;
+        if (direction != Vector3.back)
+            direction = Vector3.forward;
+    }
 
-        //Debug.LogError("Keys pressed");
+
+
+
+    public void OnTriggerEnter(Collider collision)
+    {
+        if (collision.attachedRigidbody != null)
+        {
+            SnakeSegmentController snakeSegmentController = collision.attachedRigidbody.GetComponent<SnakeSegmentController>();
+            if (snakeSegmentController != null)
+            {
+
+                if (_snakeSegments.Count == 0)
+                {
+                    InvokeCollision();
+                }
+                else
+                {
+                    int firstSegmentsToExclude = 2;
+                    for (int i = 0; i < firstSegmentsToExclude; i++)
+                    {
+                        if (_snakeSegments.Count > i && _snakeSegments[i] != snakeSegmentController)
+                        {
+                            //Debug.LogError("So far so good3");
+                            InvokeCollision();
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+    private void InvokeCollision()
+    {
+        OnSnakeCollisionedWithSegment.Invoke(this);
     }
 }

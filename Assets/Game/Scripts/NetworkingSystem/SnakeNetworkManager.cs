@@ -10,6 +10,9 @@ public class SnakeNetworkManager : NetworkManager
     [SerializeField] NetworkPlayersManager networkPlayersManager;
 
 
+    [Header("UnityEvents")]
+    public SnakeControllerEvent OnSnakePrefabAdded;
+
 
 
     public override void Awake()
@@ -21,7 +24,6 @@ public class SnakeNetworkManager : NetworkManager
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
-
         GameObject player = Instantiate(playerPrefab);
         NetworkServer.AddPlayerForConnection(conn, player);
         networkPlayersManager.AddNetworkPlayerToList(player);
@@ -44,7 +46,6 @@ public class SnakeNetworkManager : NetworkManager
 
     public SnakeController GetClientSnakeController()
     {
-
         return networkPlayersManager.GetPlayerSnakeController();
     }
 }
