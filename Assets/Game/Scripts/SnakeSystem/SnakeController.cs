@@ -42,7 +42,7 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
             {
                 SnakeSegmentController currentSnakeSegment = _snakeSegments[i];
                 SnakeSegmentController previousSnakeSegment = _snakeSegments[i - 1];
-                if (currentSnakeSegment != null)
+                if (currentSnakeSegment != null && previousSnakeSegment != null)
                     currentSnakeSegment.Position = previousSnakeSegment.Position;
 
             }

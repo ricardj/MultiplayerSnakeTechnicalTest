@@ -34,7 +34,6 @@ public class SnakeNetworkManager : NetworkManager
     public override void OnServerDisconnect(NetworkConnectionToClient conn)
     {
         base.OnServerDisconnect(conn);
-        conn.DestroyOwnedObjects();
     }
 
     public override void OnClientConnect()
