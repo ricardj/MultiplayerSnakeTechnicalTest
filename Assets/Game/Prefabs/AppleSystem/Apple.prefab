@@ -210,5 +210,5 @@ MonoBehaviour:
   onlySyncOnChangeCorrectionMultiplier: 2
   rotationSensitivity: 0.01
   compressRotation: 0
-  positionPrecision: 1
+  positionPrecision: 0.01
   scalePrecision: 0.01

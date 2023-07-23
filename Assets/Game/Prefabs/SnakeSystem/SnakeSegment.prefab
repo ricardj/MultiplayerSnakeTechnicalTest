@@ -86,11 +86,11 @@ MonoBehaviour:
   target: {fileID: 4831023135403519356}
   clientAuthority: 1
   syncPosition: 1
-  syncRotation: 1
+  syncRotation: 0
   syncScale: 0
   interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 1
+  interpolateRotation: 0
+  interpolateScale: 0
   sendIntervalMultiplier: 1
   timelineOffset: 0
   showGizmos: 0
