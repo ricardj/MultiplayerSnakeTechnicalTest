@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SnakeNetworkManager : NetworkManager
 {
@@ -40,7 +41,13 @@ public class SnakeNetworkManager : NetworkManager
     {
         base.OnClientConnect();
     }
-  
+
+    public override void OnClientDisconnect()
+    {
+        base.OnClientDisconnect();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 
     public SnakeController GetClientSnakeController()
     {

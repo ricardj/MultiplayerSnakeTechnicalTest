@@ -157,6 +157,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  _networkTransform: {fileID: 7940012464328979721}
   _snakeSegmentPrefab: {fileID: 4180559980195314541, guid: 59ce49252befb4d41af9dc01c8e72c9b, type: 3}
   _snakeCollider: {fileID: 7504474202958698383}
   _updatePeriod: 0.1

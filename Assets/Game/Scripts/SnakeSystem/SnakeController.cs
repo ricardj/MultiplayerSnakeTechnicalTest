@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
 {
+    [SerializeField] NetworkTransformReliable _networkTransform;
     [SerializeField] SyncList<SnakeSegmentController> _snakeSegments = new SyncList<SnakeSegmentController>();
     [SerializeField] SnakeSegmentController _snakeSegmentPrefab;
     [SerializeField] Collider _snakeCollider;
@@ -43,7 +44,10 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
                 SnakeSegmentController currentSnakeSegment = _snakeSegments[i];
                 SnakeSegmentController previousSnakeSegment = _snakeSegments[i - 1];
                 if (currentSnakeSegment != null && previousSnakeSegment != null)
+                {
+
                     currentSnakeSegment.Position = previousSnakeSegment.Position;
+                }
 
             }
             if (_snakeSegments[0] != null)
@@ -138,5 +142,10 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
     private void InvokeCollision()
     {
         OnSnakeCollisionedWithSegment.Invoke(this);
+    }
+
+    public void Teleport(Vector3 vector3)
+    {
+        _networkTransform.CmdTeleport(vector3);
     }
 }

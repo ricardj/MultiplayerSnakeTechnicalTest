@@ -51,6 +51,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  networkTransform: {fileID: 7608295713000728682}
 --- !u!114 &5577385581889021741
 MonoBehaviour:
   m_ObjectHideFlags: 0
