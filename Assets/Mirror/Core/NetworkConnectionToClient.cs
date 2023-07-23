@@ -240,7 +240,7 @@ namespace Mirror
             owned.Remove(obj);
         }
 
-        internal void DestroyOwnedObjects()
+        public void DestroyOwnedObjects()
         {
             // create a copy because the list might be modified when destroying
             HashSet<NetworkIdentity> tmp = new HashSet<NetworkIdentity>(owned);
@@ -250,7 +250,7 @@ namespace Mirror
                 {
                     // unspawn scene objects, destroy instantiated objects.
                     // fixes: https://github.com/MirrorNetworking/Mirror/issues/3538
-                    if (netIdentity.sceneId != 0) 
+                    if (netIdentity.sceneId != 0)
                         NetworkServer.UnSpawn(netIdentity.gameObject);
                     else
                         NetworkServer.Destroy(netIdentity.gameObject);

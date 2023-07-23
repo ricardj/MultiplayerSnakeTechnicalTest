@@ -1,3 +1,4 @@
+using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class EndGameWhenSnakeCollidedWithSomething : MonoBehaviour
         snakeController.OnSnakeCollisionedWithSegment.AddListener(snake =>
         {
             endGameScreenManager.ShowScreen();
+            
             snakeNetworkManager.StopHost();
         });
     }

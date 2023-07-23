@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
 {
-    [SerializeField] List<SnakeSegmentController> _snakeSegments = new List<SnakeSegmentController>();
+    [SerializeField] SyncList<SnakeSegmentController> _snakeSegments = new SyncList<SnakeSegmentController>();
     [SerializeField] SnakeSegmentController _snakeSegmentPrefab;
     [SerializeField] Collider _snakeCollider;
 
@@ -42,9 +42,12 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
             {
                 SnakeSegmentController currentSnakeSegment = _snakeSegments[i];
                 SnakeSegmentController previousSnakeSegment = _snakeSegments[i - 1];
-                currentSnakeSegment.Position = previousSnakeSegment.Position;
+                if (currentSnakeSegment != null)
+                    currentSnakeSegment.Position = previousSnakeSegment.Position;
+
             }
-            _snakeSegments[0].Position = transform.position;
+            if (_snakeSegments[0] != null)
+                _snakeSegments[0].Position = transform.position;
         }
 
         this.transform.position = new Vector3(
@@ -52,6 +55,8 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
             0,
             Mathf.Round(this.transform.position.z) + direction.z
             );
+
+
     }
 
 
@@ -60,7 +65,7 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
     {
         Vector3 targetPosition = _snakeSegments.Count > 0 ? _snakeSegments.Last().Position : transform.position;
         SnakeSegmentController newController = Instantiate(_snakeSegmentPrefab, targetPosition, Quaternion.identity);
-        NetworkServer.Spawn(newController.gameObject);
+        NetworkServer.Spawn(newController.gameObject, this.gameObject);
         //if (_snakeSegments.Count > 0)
         //{
         //    newController.Position = _snakeSegments.Last().Position;
@@ -118,12 +123,12 @@ public class SnakeController : NetworkBehaviour, IPicker, IWallInteractable
                     int firstSegmentsToExclude = 2;
                     for (int i = 0; i < firstSegmentsToExclude; i++)
                     {
-                        if (_snakeSegments.Count > i && _snakeSegments[i] != snakeSegmentController)
+                        if (_snakeSegments.Count > i && _snakeSegments[i] == snakeSegmentController)
                         {
-                            //Debug.LogError("So far so good3");
-                            InvokeCollision();
+                            return;
                         }
                     }
+                    InvokeCollision();
                 }
 
             }
